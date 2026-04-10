@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vòng Quay Hộp Quà May Mắn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="ambient ambient-left"></div>
+    <div class="ambient ambient-right"></div>
+
+    <main class="game-board">
+      <section class="hero-copy">
+        <p class="eyebrow">Mini Game Random</p>
+        <h1>Mở Hộp Quà<br>Săn Thưởng</h1>
+        <p class="subtitle">
+          Chạm vào hộp quà để quay thử vận may. Mỗi lần bấm sẽ có <strong>40%</strong> cơ hội trúng thưởng.
+        </p>
+      </section>
+
+      <section class="gift-stage" aria-label="Khu vực quay thưởng">
+        <div class="light-ring"></div>
+        <div class="spark spark-a"></div>
+        <div class="spark spark-b"></div>
+        <div class="spark spark-c"></div>
+
+        <button class="gift-button" id="giftButton" type="button" aria-describedby="chanceNote">
+          <span class="gift-glow"></span>
+          <img
+            class="gift-image"
+            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Valentines%20Day%20-%20Gift%20Box%202.svg"
+            alt="Hộp quà may mắn"
+          >
+          <span class="tap-badge">Click Để Quay</span>
+        </button>
+
+        <div class="status-panel">
+          <div class="status-card">
+            <span class="status-label">Tỉ lệ trúng</span>
+            <strong id="chanceNote">40%</strong>
+          </div>
+          <div class="status-card">
+            <span class="status-label">Lượt quay</span>
+            <strong id="spinCount">0</strong>
+          </div>
+          <div class="status-card">
+            <span class="status-label">Kết quả gần nhất</span>
+            <strong id="latestResult">Chưa quay</strong>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="result-modal" id="resultModal" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-burst"></div>
+      <p class="modal-tag" id="modalTag">Thông báo</p>
+      <h2 id="modalTitle">Bạn vừa quay xong!</h2>
+      <p class="modal-message" id="modalMessage"></p>
+      <button class="play-again" id="playAgainButton" type="button">Quay Tiếp</button>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
