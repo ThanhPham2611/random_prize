@@ -26,7 +26,7 @@ const openModal = (isWin) => {
   modalCard.classList.add(isWin ? "is-win" : "is-lose");
 
   if (isWin) {
-    modalTag.textContent = "Jackpot";
+    modalTag.textContent = "THE GARDEN";
     modalTitle.textContent = "Bạn Đã Trúng Thưởng!";
     modalMessage.textContent = "Chúc mừng! Hệ thống vừa random ra kết quả trúng thưởng cho lượt quay này.";
   } else {
