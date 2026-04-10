@@ -30,7 +30,7 @@ const openModal = (isWin) => {
     modalTitle.textContent = "Bạn Đã Trúng Thưởng!";
     modalMessage.textContent = "Chúc mừng! Hệ thống vừa random ra kết quả trúng thưởng cho lượt quay này.";
   } else {
-    modalTag.textContent = "Thử Lại Nhé";
+    modalTag.textContent = "THE GARDEN";
     modalTitle.textContent = "Chúc Bạn May Mắn Lần Sau";
     modalMessage.textContent = "Lần này chưa trúng rồi, nhưng vận may vẫn đang chờ bạn ở lượt quay tiếp theo.";
   }
