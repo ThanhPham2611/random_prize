@@ -6,10 +6,7 @@ const playAgainButton = document.getElementById("playAgainButton");
 const modalTag = document.getElementById("modalTag");
 const modalTitle = document.getElementById("modalTitle");
 const modalMessage = document.getElementById("modalMessage");
-const spinCount = document.getElementById("spinCount");
-const latestResult = document.getElementById("latestResult");
 
-let totalSpins = 0;
 let isRolling = false;
 
 const pickResult = () => Math.random() < WIN_RATE;
@@ -35,7 +32,7 @@ const openModal = (isWin) => {
   } else {
     modalTag.textContent = "Thử Lại Nhé";
     modalTitle.textContent = "Chúc Bạn May Mắn Lần Sau";
-    modalMessage.textContent = "Lần này chưa trúng rồi, nhưng cơ hội 40% vẫn đang chờ bạn ở lượt tiếp theo.";
+    modalMessage.textContent = "Lần này chưa trúng rồi, nhưng vận may vẫn đang chờ bạn ở lượt quay tiếp theo.";
   }
 
   playAgainButton.focus();
@@ -51,8 +48,6 @@ const finalizeSpin = (isWin) => {
   isRolling = false;
   giftButton.classList.remove("is-spinning");
   giftButton.classList.toggle("is-win", isWin);
-
-  latestResult.textContent = isWin ? "Trúng thưởng" : "Không trúng";
   openModal(isWin);
 };
 
@@ -62,10 +57,6 @@ giftButton.addEventListener("click", () => {
   }
 
   isRolling = true;
-  totalSpins += 1;
-  spinCount.textContent = String(totalSpins);
-  latestResult.textContent = "Đang quay...";
-
   giftButton.classList.remove("is-win");
   giftButton.classList.add("is-spinning");
 
