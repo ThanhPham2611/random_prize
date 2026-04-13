@@ -19,7 +19,7 @@
         <p class="eyebrow">Mini Game Random</p>
         <h1>Mở Hộp Quà<br>Săn Thưởng</h1>
         <p class="subtitle">
-          Chạm vào hộp quà để quay thử vận may và chờ kết quả bất ngờ xuất hiện.
+          Chạm vào hộp quà để thử vận may và chờ phần thưởng bất ngờ xuất hiện.
         </p>
       </section>
 
@@ -29,14 +29,21 @@
         <div class="spark spark-b"></div>
         <div class="spark spark-c"></div>
 
-        <button class="gift-button" id="giftButton" type="button">
+        <button class="gift-button" id="giftButton" type="button" aria-label="Mở hộp quà may mắn">
           <span class="gift-glow"></span>
-          <img
-            class="gift-image"
-            src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Valentines%20Day%20-%20Gift%20Box%202.svg"
-            alt="Hộp quà may mắn"
-          >
-          <span class="tap-badge">Click Để Quay</span>
+          <span class="gift-box-stack" aria-hidden="true">
+            <img
+              class="gift-image gift-image--closed"
+              src="./asset/hop_qua_dong.png"
+              alt=""
+            >
+            <img
+              class="gift-image gift-image--open"
+              src="./asset/hop_qua_mo.png"
+              alt=""
+            >
+          </span>
+          <span class="tap-badge" id="tapBadge">Click để mở</span>
         </button>
       </section>
     </main>
