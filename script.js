@@ -1,7 +1,7 @@
-const WIN_RATE = 0.4;
-const SHAKE_MIN_DURATION = 1100;
-const SHAKE_MAX_DURATION = 1550;
+const SHAKE_MIN_DURATION = 620;
+const SHAKE_MAX_DURATION = 820;
 const OPEN_REVEAL_DELAY = 280;
+const SPIN_API_URL = "/api/spin";
 const DEFAULT_BADGE_TEXT = "Click để mở";
 const OPENING_BADGE_TEXT = "Đang mở...";
 const OPENED_BADGE_TEXT = "Hộp quà đã mở";
@@ -16,8 +16,6 @@ const modalMessage = document.getElementById("modalMessage");
 const tapBadge = document.getElementById("tapBadge");
 
 let isRolling = false;
-
-const pickResult = () => Math.random() < WIN_RATE;
 
 const randomDelay = () => {
   return Math.floor(Math.random() * (SHAKE_MAX_DURATION - SHAKE_MIN_DURATION + 1)) + SHAKE_MIN_DURATION;
@@ -34,6 +32,39 @@ const resetGiftState = () => {
   setBadgeText(DEFAULT_BADGE_TEXT);
 };
 
+const requestSpinResult = async () => {
+  const response = await fetch(SPIN_API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
+  });
+  const payload = await response.json();
+
+  if (!response.ok) {
+    throw new Error(payload.details || payload.error || "Không thể quay lúc này.");
+  }
+
+  return payload;
+};
+
+const openSystemModal = (message) => {
+  resultModal.classList.add("is-visible");
+  resultModal.setAttribute("aria-hidden", "false");
+
+  const modalCard = resultModal.querySelector(".modal-card");
+  modalCard.classList.remove("is-win");
+  modalCard.classList.add("is-lose");
+  modalTitle.classList.remove("modal-title--prize");
+
+  modalTag.textContent = "THÔNG BÁO HỆ THỐNG";
+  modalTitle.textContent = "Tạm thời chưa quay được";
+  modalMessage.textContent = message;
+
+  playAgainButton.focus();
+};
+
 const openModal = (isWin) => {
   resultModal.classList.add("is-visible");
   resultModal.setAttribute("aria-hidden", "false");
@@ -41,15 +72,17 @@ const openModal = (isWin) => {
   const modalCard = resultModal.querySelector(".modal-card");
   modalCard.classList.remove("is-win", "is-lose");
   modalCard.classList.add(isWin ? "is-win" : "is-lose");
+  modalTitle.classList.remove("modal-title--prize");
 
   if (isWin) {
-    modalTag.textContent = "THE GARDEN";
-    modalTitle.textContent = "Bạn Đã Trúng Thưởng!";
-    modalMessage.textContent = "Cảm ơn bạn đã follow OA 💙. Chúc mừng bạn đã trúng 1.000 điểm Garden Club!";
+    modalTag.textContent = "TƯNG BỪNG LỄ HỘI (24/4 - 3/5)";
+    modalTitle.classList.add("modal-title--prize");
+    modalTitle.innerHTML = '<span class="modal-title-main">1000 điểm </span><span class="modal-title-sub">garden club</span>';
+    modalMessage.textContent = "Cảm ơn bạn đã follow OA zalo The Garden Shopping Center";
   } else {
-    modalTag.textContent = "THE GARDEN";
+    modalTag.textContent = "TƯNG BỪNG LỄ HỘI (24/4 - 3/5)";
     modalTitle.textContent = "Chúc Bạn May Mắn Lần Sau";
-    modalMessage.textContent = "Cảm ơn bạn đã follow OA 💙. Chúc bạn may mắn lần sau!";
+    modalMessage.textContent = "Cảm ơn bạn đã follow OA zalo The Garden Shopping Center";
   }
 
   playAgainButton.focus();
@@ -74,13 +107,18 @@ const finalizeSpin = (isWin) => {
   }, OPEN_REVEAL_DELAY);
 };
 
+const handleSpinError = (error) => {
+  resetGiftState();
+  openSystemModal(error.message || "Hệ thống quay chưa sẵn sàng. Vui lòng thử lại sau.");
+};
+
 giftButton.addEventListener("click", () => {
   if (isRolling) {
     return;
   }
 
-  const isWin = pickResult();
   const delay = randomDelay();
+  const spinRequest = requestSpinResult();
 
   isRolling = true;
   giftButton.classList.remove("is-open", "is-win");
@@ -88,7 +126,14 @@ giftButton.addEventListener("click", () => {
   giftButton.style.setProperty("--shake-duration", `${delay}ms`);
   setBadgeText(OPENING_BADGE_TEXT);
 
-  window.setTimeout(() => finalizeSpin(isWin), delay);
+  window.setTimeout(async () => {
+    try {
+      const result = await spinRequest;
+      finalizeSpin(Boolean(result.isWin));
+    } catch (error) {
+      handleSpinError(error);
+    }
+  }, delay);
 });
 
 playAgainButton.addEventListener("click", closeModal);

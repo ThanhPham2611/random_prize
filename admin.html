@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Win Rate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <section class="admin-card">
+      <p class="admin-eyebrow">The Garden Config</p>
+      <h1>Dieu chinh ti le trung thuong</h1>
+      <p class="admin-copy">
+        Trang nay cap nhat win rate trong Supabase thong qua API Vercel, khong can deploy lai.
+      </p>
+
+      <form class="admin-form" id="adminForm">
+        <label class="field">
+          <span>Mat khau admin</span>
+          <input id="adminPassword" name="adminPassword" type="password" autocomplete="current-password" placeholder="Nhap mat khau admin">
+        </label>
+
+        <div class="field-group">
+          <label class="field">
+            <span>Ti le trung (%)</span>
+            <input id="winRatePercent" name="winRatePercent" type="number" min="0" max="100" step="0.1" placeholder="40">
+          </label>
+
+          <div class="stat-card">
+            <span class="stat-label">Hien tai</span>
+            <strong id="currentRate">--</strong>
+            <small id="updatedAt">Chua tai du lieu</small>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button class="secondary-button" id="loadConfigButton" type="button">Tai cau hinh</button>
+          <button class="primary-button" type="submit">Luu ti le moi</button>
+        </div>
+      </form>
+
+      <p class="helper-text">
+        Gia tri hop le tu 0 den 100. Vi du 40 nghia la 40% ti le trung.
+      </p>
+      <p class="status-message" id="statusMessage" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="./admin.js"></script>
+</body>
+</html>
